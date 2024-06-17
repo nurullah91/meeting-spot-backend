@@ -1,7 +1,7 @@
 import httpStatus from 'http-status';
 import { IUser, TUserLogin } from './user.interface';
 import { User } from './user.model';
-import AppError from '../../error/AppError';
+import AppError from '../../errors/AppError';
 import { createToken } from './user.utils';
 import config from '../../config';
 
@@ -30,6 +30,7 @@ const loginUserWithEmail = async (payload: TUserLogin) => {
   const jwtPayload = {
     email: user.email,
     phone: user.phone,
+    role: user.role,
   };
 
   const token = createToken(
