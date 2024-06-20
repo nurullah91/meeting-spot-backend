@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { IRooms } from './rooms.interface';
+import { TRooms } from './rooms.interface';
 
 const roomSchema = new Schema({
   name: { type: String, required: true },
@@ -11,5 +11,23 @@ const roomSchema = new Schema({
   isDeleted: { type: Boolean, default: false },
 });
 
-const Room = mongoose.model<IRooms>('Room', roomSchema);
+roomSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+roomSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+roomSchema.pre('findOneAndUpdate', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+roomSchema.pre('findOneAndDelete', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+const Room = mongoose.model<TRooms>('Room', roomSchema);
 export default Room;

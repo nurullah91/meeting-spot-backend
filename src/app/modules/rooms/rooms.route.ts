@@ -13,4 +13,15 @@ router.post(
   RoomControllers.createRooms,
 );
 
+router.get('/', RoomControllers.getAllRooms);
+
+router.get('/:id', RoomControllers.getSingleRoom);
+
+router.put(
+  '/:id',
+  auth('admin'),
+  validateRequest(roomsValidation.updateRoomsValidationSchema),
+  RoomControllers.updateSingleRoom,
+);
+router.delete('/:id', auth('admin'), RoomControllers.deleteSingleRoom);
 export const RoomRoutes = router;

@@ -1,4 +1,4 @@
-export interface IRooms {
+export type TRooms = {
   name: string;
   roomNo: number;
   floorNo: number;
@@ -6,4 +6,4 @@ export interface IRooms {
   pricePerSlot: number;
   amenities: string[];
   isDeleted: boolean;
-}
+};
