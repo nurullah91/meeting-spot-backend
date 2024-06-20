@@ -1,4 +1,4 @@
-export interface IRoom {
+export interface IRooms {
   name: string;
   roomNo: number;
   floorNo: number;

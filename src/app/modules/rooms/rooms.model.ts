@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { IRoom } from './rooms.interface';
+import { IRooms } from './rooms.interface';
 
 const roomSchema = new Schema({
   name: { type: String, required: true },
@@ -11,5 +11,5 @@ const roomSchema = new Schema({
   isDeleted: { type: Boolean, default: false },
 });
 
-const Room = mongoose.model<IRoom>('Room', roomSchema);
+const Room = mongoose.model<IRooms>('Room', roomSchema);
 export default Room;
