@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Model } from 'mongoose';
 
 export interface IUser {
@@ -18,7 +19,7 @@ export interface UserModel extends Model<IUser> {
   isPasswordMatched(
     plainTextPassword: string,
     hashedPassword: string,
-  ): Promise<Boolean>;
+  ): Promise<boolean>;
 }
 
 export type TUserLogin = {
