@@ -31,14 +31,13 @@ const loginUserWithEmail = async (payload: TUserLogin) => {
     email: user.email,
     phone: user.phone,
     role: user.role,
+    userId: user._id,
   };
-
   const token = createToken(
     jwtPayload,
     config.jwt_access_secret as string,
     '1d',
   );
-
   // remove password before sent it to front end
   user.password = '';
   const result = {

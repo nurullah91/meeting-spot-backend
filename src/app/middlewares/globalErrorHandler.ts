@@ -10,7 +10,7 @@ import config from '../config';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   // default value
-  let statusCode = 5000;
+  let statusCode = 500;
   let message = 'Something went wrong';
   let errorSources: TErrorSources = [
     {

@@ -5,6 +5,7 @@ import Room from '../rooms/rooms.model';
 import AppError from '../../errors/AppError';
 import { Slot } from '../slots/slots.model';
 import Booking from './booking.model';
+import { User } from '../user/user.model';
 
 const createBooking = async (payload: any) => {
   const { date, slots, room, user } = payload;
@@ -49,7 +50,9 @@ const getAllBookings = async () => {
     .populate('slots');
 };
 
-const getUserBookings = async (userId: string) => {
+const getUserBookings = async (email: string) => {
+  const user = await User.findOne({ email });
+  const userId = user?._id;
   return Booking.find({ user: userId, isDeleted: false })
     .populate('room')
     .populate('user')

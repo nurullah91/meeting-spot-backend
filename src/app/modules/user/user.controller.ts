@@ -1,4 +1,4 @@
-import catchAsync from '../../utils/cathAsync';
+import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { UserServices } from './user.service';
 import httpStatus from 'http-status';

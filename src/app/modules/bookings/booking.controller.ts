@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import { BookingServices } from './booking.service';
-import catchAsync from '../../utils/cathAsync';
+import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 
 const createBooking = catchAsync(async (req, res) => {
@@ -24,8 +24,9 @@ const getAllBookings = catchAsync(async (req, res) => {
 });
 
 const getUserBookings = catchAsync(async (req, res) => {
-  const userId = req.user._id;
-  const result = await BookingServices.getUserBookings(userId);
+  const userEmail = req.user.email;
+
+  const result = await BookingServices.getUserBookings(userEmail);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

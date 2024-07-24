@@ -2,7 +2,7 @@ import httpStatus from 'http-status';
 import AppError from '../errors/AppError';
 import { TUserRole } from '../modules/user/user.interface';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import catchAsync from '../utils/cathAsync';
+import catchAsync from '../utils/catchAsync';
 import config from '../config';
 import { User } from '../modules/user/user.model';
 import { NextFunction, Request, Response } from 'express';
@@ -22,7 +22,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
       token,
       config.jwt_access_secret as string,
     ) as JwtPayload;
-
     const { email, role } = decoded;
 
     const user = await User.isUserExistsByEmail(email);

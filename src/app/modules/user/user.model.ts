@@ -77,4 +77,5 @@ userSchema.post('save', function (doc, next) {
   doc.password = '';
   next();
 });
+
 export const User = model<IUser, UserModel>('Users', userSchema);

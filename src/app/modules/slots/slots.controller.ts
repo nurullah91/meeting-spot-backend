@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import catchAsync from '../../utils/cathAsync';
+import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { SlotServices } from './slots.service';
 
