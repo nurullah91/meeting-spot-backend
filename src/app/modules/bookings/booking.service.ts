@@ -6,6 +6,7 @@ import AppError from '../../errors/AppError';
 import { Slot } from '../slots/slots.model';
 import Booking from './booking.model';
 import { User } from '../user/user.model';
+import QueryBuilder from '../../../builder/QueryBuilder';
 
 const createBooking = async (payload: any) => {
   const { date, slots, room, user } = payload;
@@ -43,16 +44,33 @@ const createBooking = async (payload: any) => {
   return booking;
 };
 
-const getAllBookings = async () => {
-  return Booking.find({ isDeleted: false })
-    .populate('room')
-    .populate('user')
-    .populate('slots');
+const getAllBookings = async (query: Record<string, unknown>) => {
+  const allBookingsQuery = new QueryBuilder(
+    Booking.find().populate('room').populate('user').populate('slots'),
+    query,
+  )
+    .search(['date'])
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const meta = await allBookingsQuery.countTotal();
+  const result = await allBookingsQuery.modelQuery;
+  return {
+    meta,
+    result,
+  };
 };
 
 const getUserBookings = async (email: string) => {
   const user = await User.findOne({ email });
+
   const userId = user?._id;
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
   return Booking.find({ user: userId, isDeleted: false })
     .populate('room')
     .populate('user')

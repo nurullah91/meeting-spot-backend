@@ -31,8 +31,6 @@ This is a co-working spaces for meetings and discussions management website serv
 > ### Slots
 >
 > - POST: api/slots
-> - PUT: api/v1/orders/:id
-> - DELETE: api/v1/orders/:id
 > - GET: /api/slots/availability
 > - GET:/api/slots/availability?date=2024-06-15&roomId=60d9c4e4f3b4b544b8b8d1c5
 

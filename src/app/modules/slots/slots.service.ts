@@ -37,6 +37,38 @@ const createSlotsIntoDB = async (payload: TSlots) => {
   return result;
 };
 
+// const getAvailableSlotsFromDB = async (query: Record<string, unknown>) => {
+
+//   const availableSotsQuery = new QueryBuilder(
+//     Slot.find().populate('room'),
+//     query,
+//   )
+//     .search(['date'])
+//     .filter()
+//     .sort()
+//     .paginate()
+//     .fields();
+
+//   const meta = await availableSotsQuery.countTotal();
+//   const result = await availableSotsQuery.modelQuery;
+
+//   return {
+//     meta,
+//     result,
+//   };
+//   // const query: any = { isBooked: false };
+//   // if (date) {
+//   //   query.date = date;
+//   // }
+//   // if (roomId) {
+//   //   query.room = roomId;
+//   // }
+
+//   // const slots = await Slot.find(query).populate('room');
+
+//   // return slots;
+// };
+
 const getAvailableSlotsFromDB = async (filters: {
   date?: string;
   roomId?: string;

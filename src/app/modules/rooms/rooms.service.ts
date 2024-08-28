@@ -1,3 +1,4 @@
+import QueryBuilder from '../../../builder/QueryBuilder';
 import { TRooms } from './rooms.interface';
 import Room from './rooms.model';
 
@@ -7,9 +8,20 @@ const createRoomsIntoDB = async (payload: TRooms) => {
   return result;
 };
 
-const getAllRoomsFromDB = async () => {
-  const result = await Room.find();
-  return result;
+const getAllRoomsFromDB = async (query: Record<string, unknown>) => {
+  const roomQuery = new QueryBuilder(Room.find(), query)
+    .search(['name', 'amenities'])
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const meta = await roomQuery.countTotal();
+  const result = await roomQuery.modelQuery;
+  return {
+    meta,
+    result,
+  };
 };
 
 const getSingleRoomsFromDB = async (id: string) => {
