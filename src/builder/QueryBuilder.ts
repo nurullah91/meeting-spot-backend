@@ -26,12 +26,29 @@ class QueryBuilder<T> {
   }
 
   filter() {
-    const queryObj = { ...this.query }; // copy
+    const queryObj = { ...this.query }; // make a copy of query
 
-    // Filtering
+    // Exclude field without filter, minPrice, maxPrice
     const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
 
     excludeFields.forEach((el) => delete queryObj[el]);
+
+    // Filter by capacity
+    if (queryObj.capacity) {
+      this.modelQuery = this.modelQuery.find({
+        capacity: { $gte: queryObj.capacity as number },
+      });
+    }
+
+    //Filter by price
+    if (queryObj.minPrice || queryObj.maxPrice) {
+      this.modelQuery = this.modelQuery.find({
+        pricePerSlot: {
+          $gte: queryObj.minPrice || 0,
+          $lte: queryObj.maxPrice || Number.MAX_VALUE,
+        },
+      });
+    }
 
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
 
