@@ -1,4 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FilterQuery, Query } from 'mongoose';
+
+type TRoomFilterQuery<T> = FilterQuery<T> & {
+  capacity?: { $gte?: number };
+  pricePerSlot?: { $gte?: number; $lte?: number };
+};
 
 class QueryBuilder<T> {
   public modelQuery: Query<T[], T>;
@@ -26,31 +32,35 @@ class QueryBuilder<T> {
   }
 
   filter() {
-    const queryObj = { ...this.query }; // make a copy of query
+    const queryObj = { ...this.query }; //make a copy of query objects
 
-    // Exclude field without filter, minPrice, maxPrice
+    //exclude all the fields without filter, minPrice, maxPrice, and capacity
     const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
-
     excludeFields.forEach((el) => delete queryObj[el]);
 
+    // Create an empty filter object
+    const filterConditions: TRoomFilterQuery<T> = {};
+
     // Filter by capacity
-    if (queryObj.capacity) {
-      this.modelQuery = this.modelQuery.find({
-        capacity: { $gte: queryObj.capacity as number },
-      });
+    if (queryObj.capacity !== undefined) {
+      filterConditions.capacity = { $gte: queryObj.capacity as number };
     }
 
-    //Filter by price
-    if (queryObj.minPrice || queryObj.maxPrice) {
-      this.modelQuery = this.modelQuery.find({
-        pricePerSlot: {
-          $gte: queryObj.minPrice || 0,
-          $lte: queryObj.maxPrice || Number.MAX_VALUE,
-        },
-      });
+    // Filter by price
+    const priceConditions: Record<string, number> = {};
+    if (queryObj.minPrice !== undefined) {
+      priceConditions.$gte = queryObj.minPrice as number;
+    }
+    if (queryObj.maxPrice !== undefined) {
+      priceConditions.$lte = queryObj.maxPrice as number;
     }
 
-    this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
+    if (Object.keys(priceConditions).length > 0) {
+      filterConditions.pricePerSlot = priceConditions as any;
+    }
+
+    // Apply the filters to the model query
+    this.modelQuery = this.modelQuery.find(filterConditions);
 
     return this;
   }
