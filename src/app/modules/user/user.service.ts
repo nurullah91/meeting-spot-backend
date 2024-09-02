@@ -6,7 +6,8 @@ import { createToken } from './user.utils';
 import config from '../../config';
 
 const createUserIntoDB = async (payload: IUser) => {
-  const result = User.create(payload);
+  const userInfo = { ...payload, role: 'user' };
+  const result = User.create(userInfo);
   return result;
 };
 
@@ -46,7 +47,16 @@ const loginUserWithEmail = async (payload: TUserLogin) => {
   };
   return result;
 };
+
+const updateUserIntoDB = async (userId: string, payload: Partial<IUser>) => {
+  const result = User.findByIdAndUpdate(userId, payload, {
+    new: true,
+  });
+
+  return result;
+};
 export const UserServices = {
   createUserIntoDB,
   loginUserWithEmail,
+  updateUserIntoDB,
 };

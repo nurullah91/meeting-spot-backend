@@ -29,7 +29,7 @@ const userSchema = new Schema<IUser, UserModel>(
     },
     role: {
       type: String,
-      required: true,
+      default: 'user',
       enum: ['user', 'admin'],
     },
     isDeleted: {

@@ -14,6 +14,18 @@ const createUser = catchAsync(async (req, res) => {
   });
 });
 
+const updateUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+  const result = await UserServices.updateUserIntoDB(userId, req.body);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User updated successfully',
+    data: result,
+  });
+});
+
 const loginUser = catchAsync(async (req, res) => {
   const result = await UserServices.loginUserWithEmail(req.body);
 
@@ -28,4 +40,5 @@ const loginUser = catchAsync(async (req, res) => {
 export const UserControllers = {
   createUser,
   loginUser,
+  updateUser,
 };
