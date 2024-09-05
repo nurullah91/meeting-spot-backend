@@ -5,6 +5,10 @@ const createBooking = z.object({
   slots: z.array(z.string().nonempty()).nonempty(),
   room: z.string().nonempty(),
   user: z.string().nonempty(),
+  email: z.string().email(),
+  paymentMethod: z.string(),
+  paymentStatus: z.enum(['Pending', 'Paid']),
+  totalAmount: z.number().nonnegative(),
 });
 
 const updateBooking = z.object({

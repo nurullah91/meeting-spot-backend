@@ -12,6 +12,11 @@ const createBooking = async (payload: any) => {
   const { date, slots, room, user } = payload;
 
   // Validate room
+  const userExists = await User.findById(user);
+  if (!userExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  // Validate room
   const roomExists = await Room.findById(room);
   if (!roomExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'Room not found');
@@ -31,12 +36,7 @@ const createBooking = async (payload: any) => {
     );
   }
 
-  // Calculate total amount
-  const totalAmount = slotDocs.length * roomExists.pricePerSlot;
-
-  const bookingData = { date, slots, room, user, totalAmount };
-  // Create booking
-  const booking = await Booking.create(bookingData);
+  const booking = await Booking.create(payload);
 
   // Mark slots as booked
   await Slot.updateMany({ _id: { $in: slots } }, { isBooked: true });

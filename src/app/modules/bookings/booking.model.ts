@@ -13,6 +13,12 @@ const bookingSchema = new mongoose.Schema(
       required: true,
     },
     totalAmount: { type: Number, required: true },
+    email: { type: String, required: true },
+    paymentMethod: { type: String, required: true },
+    paymentStatus: {
+      type: String,
+      enum: ['Pending', 'Paid'],
+    },
     isConfirmed: {
       type: String,
       enum: ['unconfirmed', 'confirmed'],
