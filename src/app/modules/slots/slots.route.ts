@@ -12,6 +12,13 @@ router.post(
   validateRequest(SlotsValidation.createSlotValidationSchema),
   SlotControllers.createSlots,
 );
+router.patch(
+  '/:id',
+  auth('admin'),
+  validateRequest(SlotsValidation.updateSlotValidationSchema),
+  SlotControllers.updateSingleSlot,
+);
+router.delete('/:id', auth('admin'), SlotControllers.deleteSingleSlot);
 
 router.get('/availability', SlotControllers.getAvailableSlots);
 export const SlotRoutes = router;

@@ -5,6 +5,7 @@ const roomSchema = new Schema(
   {
     name: { type: String, required: true },
     img: { type: String, required: true },
+    detailImages: { type: [String], required: true },
     roomNo: { type: Number, required: true, unique: true },
     floorNo: { type: Number, required: true },
     capacity: { type: Number, required: true },

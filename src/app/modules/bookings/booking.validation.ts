@@ -17,6 +17,7 @@ const updateBooking = z.object({
   room: z.string().optional(),
   user: z.string().optional(),
   totalAmount: z.number().optional(),
+  paymentStatus: z.enum(['Pending', 'Paid']).optional(),
   isConfirmed: z.enum(['unconfirmed', 'confirmed']).optional(),
   isDeleted: z.boolean().optional(),
 });

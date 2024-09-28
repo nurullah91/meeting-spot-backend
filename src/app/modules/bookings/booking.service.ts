@@ -7,8 +7,11 @@ import { Slot } from '../slots/slots.model';
 import Booking from './booking.model';
 import { User } from '../user/user.model';
 import QueryBuilder from '../../../builder/QueryBuilder';
+import { initiatePayment } from '../../utils/payments';
+import { generateTransactionId } from '../../utils/generateTransactionId';
+import { IBooking } from './booking.interface';
 
-const createBooking = async (payload: any) => {
+const createBooking = async (payload: IBooking) => {
   const { date, slots, room, user } = payload;
 
   // Validate room
@@ -36,17 +39,32 @@ const createBooking = async (payload: any) => {
     );
   }
 
-  const booking = await Booking.create(payload);
+  const transactionId = generateTransactionId(userExists);
+  await Booking.create({
+    ...payload,
+    paymentStatus: 'Pending',
+    txnId: transactionId,
+  });
+
+  const bookingData = {
+    transactionId,
+    ...payload,
+    user: userExists,
+  };
+  const paymentData = await initiatePayment(bookingData);
 
   // Mark slots as booked
   await Slot.updateMany({ _id: { $in: slots } }, { isBooked: true });
 
-  return booking;
+  return paymentData.data;
 };
 
 const getAllBookings = async (query: Record<string, unknown>) => {
   const allBookingsQuery = new QueryBuilder(
-    Booking.find().populate('room').populate('user').populate('slots'),
+    Booking.find({ isDeleted: false })
+      .populate('room')
+      .populate('user')
+      .populate('slots'),
     query,
   )
     .search(['date'])

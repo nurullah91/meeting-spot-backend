@@ -5,6 +5,7 @@ export type TRooms = {
   capacity: number;
   pricePerSlot: number;
   img: string;
+  detailImages: string[];
   amenities: string[];
   isDeleted: boolean;
 };

@@ -19,6 +19,7 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       enum: ['Pending', 'Paid'],
     },
+    txnId: { type: String, required: true },
     isConfirmed: {
       type: String,
       enum: ['unconfirmed', 'confirmed'],

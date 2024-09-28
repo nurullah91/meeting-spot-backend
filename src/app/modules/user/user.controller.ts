@@ -13,6 +13,16 @@ const createUser = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getAllUser = catchAsync(async (req, res) => {
+  const result = await UserServices.getAllUserFromDB(req.query);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'All User retrieved successfully',
+    data: result,
+  });
+});
 
 const updateUser = catchAsync(async (req, res) => {
   const { userId } = req.params;
@@ -22,6 +32,17 @@ const updateUser = catchAsync(async (req, res) => {
     success: true,
     statusCode: httpStatus.OK,
     message: 'User updated successfully',
+    data: result,
+  });
+});
+const deleteUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+  const result = await UserServices.deleteUserIntoDB(userId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User deleted successfully',
     data: result,
   });
 });
@@ -39,6 +60,8 @@ const loginUser = catchAsync(async (req, res) => {
 });
 export const UserControllers = {
   createUser,
+  getAllUser,
   loginUser,
   updateUser,
+  deleteUser,
 };

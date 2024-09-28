@@ -18,5 +18,7 @@ router.patch(
   validateRequest(UserValidation.updateUserValidationSchema),
   UserControllers.updateUser,
 );
+router.get('/users', auth('admin'), UserControllers.getAllUser);
+router.delete('/users/:userId', auth('admin'), UserControllers.deleteUser);
 
 export const UserRoutes = router;

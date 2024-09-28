@@ -75,7 +75,7 @@ const getAvailableSlotsFromDB = async (filters: {
 }) => {
   const { date, roomId } = filters;
 
-  const query: any = { isBooked: false };
+  const query: any = { isBooked: false, isDeleted: false };
   if (date) {
     query.date = date;
   }
@@ -87,8 +87,30 @@ const getAvailableSlotsFromDB = async (filters: {
 
   return slots;
 };
+const updateSlotIntoDB = async (id: string, payload: Partial<TSlots>) => {
+  const result = await Slot.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
+  return result;
+};
 
+const deleteSlotFromDB = async (id: string) => {
+  const result = await Slot.findByIdAndUpdate(
+    id,
+    {
+      isDeleted: true,
+    },
+    {
+      new: true,
+    },
+  );
+
+  return result;
+};
 export const SlotServices = {
+  updateSlotIntoDB,
+  deleteSlotFromDB,
   createSlotsIntoDB,
   getAvailableSlotsFromDB,
 };
