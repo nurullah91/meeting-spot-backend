@@ -4,6 +4,7 @@ import { RoomRoutes } from '../modules/rooms/rooms.route';
 import { SlotRoutes } from '../modules/slots/slots.route';
 import { BookingRoutes } from '../modules/bookings/booking.route';
 import { PaymentRoutes } from '../modules/payment/payment.route';
+import { ReviewRoutes } from '../modules/reviews/reviews.route';
 
 const router = Router();
 
@@ -27,6 +28,10 @@ const allRoutes = [
   {
     path: '/payment',
     route: PaymentRoutes,
+  },
+  {
+    path: '/review',
+    route: ReviewRoutes,
   },
 ];
 

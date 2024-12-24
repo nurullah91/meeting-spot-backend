@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const createRoomsValidationSchema = z.object({
   name: z.string().nonempty({ message: 'Name is required' }),
-  img: z.string().nonempty({ message: 'Name is required' }),
+  img: z.string().nonempty({ message: 'Img is required' }),
   details: z.string().nonempty({ message: 'Details is required' }),
   category: z.string().nonempty({ message: 'Category is required' }),
   detailImages: z.array(
