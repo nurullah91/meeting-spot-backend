@@ -4,6 +4,9 @@ export type TRooms = {
   floorNo: number;
   capacity: number;
   pricePerSlot: number;
+  details: string;
+  category: string;
+  ratings: number[];
   img: string;
   detailImages: string[];
   amenities: string[];
