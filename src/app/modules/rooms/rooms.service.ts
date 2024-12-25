@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import QueryBuilder from '../../../builder/QueryBuilder';
 import { TRooms } from './rooms.interface';
 import Room from './rooms.model';
+import { ReviewServices } from '../reviews/reviews.service';
 
 const createRoomsIntoDB = async (payload: TRooms) => {
   const result = await Room.create(payload);
@@ -52,17 +53,15 @@ const getSingleRoomsFromDB = async (id: string) => {
         },
       },
     },
-    {
-      $lookup: {
-        from: 'reviews', // Collection name for reviews
-        localField: '_id', // Field in Room collection
-        foreignField: 'room', // Field in Review collection
-        as: 'reviews',
-      },
-    },
   ]);
 
-  return result[0] || null;
+  if (!result[0]) {
+    return null;
+  }
+
+  const reviews = await ReviewServices.getSingleRoomsReviewsFromDB(id);
+
+  return { ...result[0], reviews };
 };
 
 const updateSingleRoomsIntoDB = async (

@@ -1,8 +1,13 @@
+import Room from '../rooms/rooms.model';
 import { TReviews } from './reviews.interface';
 import { Review } from './reviews.model';
 
 const createReviewsIntoDB = async (payload: TReviews) => {
   const result = await Review.create(payload);
+  // Update rooms ratings array
+  await Room.findByIdAndUpdate(payload.room, {
+    $push: { ratings: payload.ratings },
+  });
   return result;
 };
 
@@ -38,7 +43,7 @@ const createReviewsIntoDB = async (payload: TReviews) => {
 //   };
 
 const getSingleRoomsReviewsFromDB = async (id: string) => {
-  const result = await Review.find({ room: id });
+  const result = await Review.find({ room: id }).populate('user');
   return result[0] || null;
 };
 

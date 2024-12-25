@@ -18,6 +18,10 @@ const SlotSchema = new Schema<TReviews>(
       default: '',
       required: true,
     },
+    ratings: {
+      type: Number,
+      required: true,
+    },
     isDeleted: {
       type: Boolean,
       default: false,

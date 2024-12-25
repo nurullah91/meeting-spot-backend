@@ -5,5 +5,6 @@ export type TReviews = {
   room: Types.ObjectId;
   user: Types.ObjectId;
   review: string;
+  ratings: number;
   isDeleted: boolean;
 };
