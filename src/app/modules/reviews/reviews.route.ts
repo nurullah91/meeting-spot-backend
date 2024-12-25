@@ -13,7 +13,7 @@ router.post(
   ReviewControllers.createReview,
 );
 
-router.get('/', ReviewControllers.getSingleRoomsReviews);
+router.get('/:id', ReviewControllers.getSingleRoomsReviews);
 
 router.put(
   '/:id',

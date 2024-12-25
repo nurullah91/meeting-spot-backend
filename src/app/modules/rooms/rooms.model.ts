@@ -21,8 +21,22 @@ const roomSchema = new Schema(
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
   },
 );
+
+// Add avgRatings virtually
+roomSchema.virtual('avgRatings').get(function () {
+  if (!this.ratings || this.ratings.length === 0) {
+    return 0;
+  }
+
+  const sum = this.ratings.reduce((acc, rating) => acc + rating, 0);
+
+  return sum / this.ratings.length;
+});
 
 roomSchema.pre('find', function (next) {
   this.find({ isDeleted: { $ne: true } });

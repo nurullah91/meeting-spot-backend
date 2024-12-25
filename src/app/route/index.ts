@@ -30,7 +30,7 @@ const allRoutes = [
     route: PaymentRoutes,
   },
   {
-    path: '/review',
+    path: '/reviews',
     route: ReviewRoutes,
   },
 ];

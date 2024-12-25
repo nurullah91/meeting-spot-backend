@@ -4,6 +4,7 @@ import { FilterQuery, Query } from 'mongoose';
 type TRoomFilterQuery<T> = FilterQuery<T> & {
   capacity?: { $gte?: number };
   pricePerSlot?: { $gte?: number; $lte?: number };
+  isFeatured?: boolean;
 };
 
 class QueryBuilder<T> {
@@ -45,6 +46,10 @@ class QueryBuilder<T> {
     if (queryObj.capacity !== undefined) {
       filterConditions.capacity = { $gte: queryObj.capacity as number };
     }
+    // Filter by isFeatured
+    if (queryObj.isFeatured !== undefined) {
+      filterConditions.isFeatured = queryObj.isFeatured === 'true';
+    }
 
     // Filter by price
     const priceConditions: Record<string, number> = {};
@@ -54,7 +59,6 @@ class QueryBuilder<T> {
     if (queryObj.maxPrice !== undefined) {
       priceConditions.$lte = queryObj.maxPrice as number;
     }
-
     if (Object.keys(priceConditions).length > 0) {
       filterConditions.pricePerSlot = priceConditions as any;
     }

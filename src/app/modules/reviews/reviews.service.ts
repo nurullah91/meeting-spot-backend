@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Room from '../rooms/rooms.model';
 import { TReviews } from './reviews.interface';
 import { Review } from './reviews.model';
@@ -43,8 +44,11 @@ const createReviewsIntoDB = async (payload: TReviews) => {
 //   };
 
 const getSingleRoomsReviewsFromDB = async (id: string) => {
-  const result = await Review.find({ room: id }).populate('user');
-  return result[0] || null;
+  const result = await Review.find({
+    room: new mongoose.Types.ObjectId(id),
+  }).populate('user');
+  console.log(result);
+  return result;
 };
 
 const updateSingleReviewIntoDB = async (
