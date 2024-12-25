@@ -28,4 +28,4 @@ const SlotSchema = new Schema<TReviews>(
   },
 );
 
-export const Review = model<TReviews>('Slot', SlotSchema);
+export const Review = model<TReviews>('Review', SlotSchema);

@@ -14,6 +14,7 @@ router.post(
 );
 
 router.get('/', RoomControllers.getAllRooms);
+router.get('/test/test-query', RoomControllers.testQuery);
 
 router.get('/:id', RoomControllers.getSingleRoom);
 
