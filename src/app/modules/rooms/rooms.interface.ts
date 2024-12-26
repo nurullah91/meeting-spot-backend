@@ -1,3 +1,5 @@
+import { TReviews } from '../reviews/reviews.interface';
+
 export type TRooms = {
   name: string;
   roomNo: number;
@@ -13,5 +15,6 @@ export type TRooms = {
   detailImages: string[];
   amenities: string[];
   isFeatured: boolean;
+  reviews?: TReviews[];
   isDeleted: boolean;
 };

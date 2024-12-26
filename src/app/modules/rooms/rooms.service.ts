@@ -2,6 +2,7 @@ import QueryBuilder from '../../../builder/QueryBuilder';
 import { TRooms } from './rooms.interface';
 import Room from './rooms.model';
 import { ReviewServices } from '../reviews/reviews.service';
+import { Review } from '../reviews/reviews.model';
 
 const createRoomsIntoDB = async (payload: TRooms) => {
   const result = await Room.create(payload);
@@ -30,14 +31,15 @@ const getAllRoomsFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleRoomsFromDB = async (id: string) => {
-  const result = await Room.findById(id);
+  const result = await Room.findById(id).lean();
 
   if (!result) {
     return null;
   }
 
-  const reviews = await ReviewServices.getSingleRoomsReviewsFromDB(id);
-  console.log(reviews);
+  // const reviews = await ReviewServices.getSingleRoomsReviewsFromDB(id);
+  const reviews = await Review.find({ room: id });
+
   return { ...result, reviews };
 };
 

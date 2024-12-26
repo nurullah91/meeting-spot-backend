@@ -10,7 +10,7 @@ const SlotSchema = new Schema<TReviews>(
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Users',
       required: true,
     },
     review: {

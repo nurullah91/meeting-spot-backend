@@ -44,10 +44,8 @@ const createReviewsIntoDB = async (payload: TReviews) => {
 //   };
 
 const getSingleRoomsReviewsFromDB = async (id: string) => {
-  const result = await Review.find({
-    room: new mongoose.Types.ObjectId(id),
-  }).populate('user');
-  console.log(result);
+  const result = await Review.find({ room: id }).populate('user');
+  console.log(result, { id });
   return result;
 };
 
