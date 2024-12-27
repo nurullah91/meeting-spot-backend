@@ -23,6 +23,16 @@ const userSchema = new Schema<IUser, UserModel>(
       type: String,
       required: true,
     },
+    profilePhoto: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/dbwftcxvx/image/upload/v1727985302/image_8_sdrdqj.jpg',
+    },
+    coverPhoto: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/dbwftcxvx/image/upload/v1735279938/Brown_Modern_Hotel_Promo_Instagram_Post_1200_x_330_px_p1e49r.png',
+    },
     address: {
       type: String,
       required: true,

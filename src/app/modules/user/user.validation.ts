@@ -8,6 +8,14 @@ const userValidationSchema = z.object({
     .min(8, { message: 'Password must be at least 8 characters long' }),
   phone: z.string().nonempty({ message: 'Phone number is required' }),
   address: z.string().nonempty({ message: 'Address is required' }),
+  profilePhoto: z
+    .string()
+    .nonempty({ message: 'Profile Photo cannot be empty' })
+    .optional(),
+  coverPhoto: z
+    .string()
+    .nonempty({ message: 'Cover photo cannot be empty' })
+    .optional(),
 });
 
 const updateUserValidationSchema = z.object({
@@ -22,6 +30,14 @@ const updateUserValidationSchema = z.object({
     .nonempty({ message: 'Phone number is required' })
     .optional(),
   address: z.string().nonempty({ message: 'Address is required' }).optional(),
+  profilePhoto: z
+    .string()
+    .nonempty({ message: 'Profile Photo cannot be empty' })
+    .optional(),
+  coverPhoto: z
+    .string()
+    .nonempty({ message: 'Cover photo cannot be empty' })
+    .optional(),
   role: z
     .enum(['user', 'admin'], {
       message: 'Role must be either user or admin',
