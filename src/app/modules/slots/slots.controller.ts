@@ -50,9 +50,24 @@ const deleteSingleSlot = catchAsync(async (req, res) => {
   });
 });
 
+const getAvailableSlotsDates = catchAsync(async (req, res) => {
+  const { roomId } = req.params;
+
+  // Fetch available slot dates
+  const availableDates = await SlotServices.getAvailableSlotDates(roomId);
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Available slot dates retrieved successfully',
+    data: availableDates,
+  });
+});
 export const SlotControllers = {
   createSlots,
   getAvailableSlots,
   updateSingleSlot,
   deleteSingleSlot,
+  getAvailableSlotsDates,
 };

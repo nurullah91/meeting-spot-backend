@@ -4,6 +4,7 @@ import { TSlots } from './slots.interface';
 import { Slot } from './slots.model';
 import AppError from '../../errors/AppError';
 import Room from '../rooms/rooms.model';
+import mongoose from 'mongoose';
 
 const createSlotsIntoDB = async (payload: TSlots) => {
   const { date, room, startTime, endTime } = payload;
@@ -108,9 +109,35 @@ const deleteSlotFromDB = async (id: string) => {
 
   return result;
 };
+
+const getAvailableSlotDates = async (roomId: string) => {
+  const result = await Slot.aggregate([
+    {
+      $match: {
+        room: new mongoose.Types.ObjectId(roomId), // Match the room ID
+        isBooked: false,
+        isDeleted: false,
+      },
+    },
+    {
+      $group: {
+        _id: '$date', // Group by date
+      },
+    },
+    {
+      $project: {
+        _id: 0, // Exclude the `_id` field from the output
+        date: '$_id', // Rename `_id` to `date`
+      },
+    },
+  ]);
+  return result.map((doc) => doc.date); // Return only the dates
+};
+
 export const SlotServices = {
   updateSlotIntoDB,
   deleteSlotFromDB,
   createSlotsIntoDB,
   getAvailableSlotsFromDB,
+  getAvailableSlotDates,
 };

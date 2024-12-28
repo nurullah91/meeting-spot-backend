@@ -21,4 +21,5 @@ router.patch(
 router.delete('/:id', auth('admin'), SlotControllers.deleteSingleSlot);
 
 router.get('/availability', SlotControllers.getAvailableSlots);
+router.get('/:roomId/available-dates', SlotControllers.getAvailableSlotsDates);
 export const SlotRoutes = router;
