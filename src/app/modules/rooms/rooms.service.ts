@@ -37,10 +37,22 @@ const getSingleRoomsFromDB = async (id: string) => {
     return null;
   }
 
+  // Manually calculate and add avgRatings
+  const avgRatings =
+    result.ratings && result.ratings.length > 0
+      ? result.ratings.reduce((sum, rating) => sum + rating, 0) /
+        result.ratings.length
+      : 0;
+
   const reviews = await ReviewServices.getSingleRoomsReviewsFromDB(id);
   // const reviews = await Review.find({ room: id });
 
-  return { ...result, reviews };
+  return { ...result, avgRatings, reviews };
+};
+
+const getAllRoomCategoriesFromDB = async () => {
+  const result = await Room.distinct('category');
+  return result;
 };
 
 const updateSingleRoomsIntoDB = async (
@@ -89,6 +101,7 @@ export const RoomServices = {
   getAllRoomsFromDB,
   testQueryIntoDB,
   getSingleRoomsFromDB,
+  getAllRoomCategoriesFromDB,
   updateSingleRoomsIntoDB,
   deleteSingleRoomFromDB,
 };

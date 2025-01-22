@@ -17,6 +17,7 @@ router.get('/', RoomControllers.getAllRooms);
 router.get('/test/test-query', RoomControllers.testQuery);
 
 router.get('/:id', RoomControllers.getSingleRoom);
+router.get('/categories/all-categories', RoomControllers.getAllRoomCategories);
 
 router.put(
   '/:id',
