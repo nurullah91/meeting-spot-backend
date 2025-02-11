@@ -81,15 +81,12 @@ const deleteSingleRoomFromDB = async (id: string) => {
 };
 
 const testQueryIntoDB = async () => {
-  // const result = await User.updateMany(
-  //   { profilePhoto: { $exists: false } },
+  // const result = await Room.updateMany(
+  //   { details: { $exists: true } },
   //   {
   //     $set: {
-  //       profilePhoto:
-  //         'https://res.cloudinary.com/dbwftcxvx/image/upload/v1727985302/image_8_sdrdqj.jpg',
-
-  //       coverPhoto:
-  //         'https://res.cloudinary.com/dbwftcxvx/image/upload/v1735279938/Brown_Modern_Hotel_Promo_Instagram_Post_1200_x_330_px_p1e49r.png',
+  //       details:
+  //         "<p>Step into <strong>Summit Room</strong>, a spacious and well-equipped <strong>seminar hall</strong> designed to host <strong>conferences, corporate events, and large-scale gatherings</strong>. With a generous <strong>capacity of 500 guests</strong>, this venue ensures a comfortable and professional atmosphere for any occasion.</p><p>Featuring <strong>modern decor and premium facilities</strong>, The Summit Room is perfect for <strong>business presentations, keynote speeches, training workshops, and networking events</strong>.</p><p><br></p><h3><strong aria-hidden='true'>Key Features &amp; Amenities</strong></h3><p>✔️ <strong>High-Speed Wi-Fi</strong> – Seamless connectivity for presentations and live streaming</p><p>✔️ <strong>Breakfast &amp; Lunch Service</strong> – Energize your attendees with delicious catering</p><p>✔️ <strong>Advanced Audio-Visual Setup</strong> – TV &amp; Projector for impactful presentations</p><p>✔️ <strong>Dedicated Stage</strong> – Ideal for speakers, performances, and panel discussions</p><p>✔️ <strong>Comfortable Seating</strong> – Spacious layout with cozy sofa arrangements</p><p><br></p><h3><strong aria-hidden='true'>Why Choose Summit Room?</strong></h3><p>🔹 <strong>Spacious &amp; Well-Designed</strong> – Ample space for networking and discussions</p><p>🔹 <strong>Affordable &amp; High-Value</strong> – At just <strong>$80 per slot</strong>, it's a budget-friendly option</p><p>🔹 <strong>Versatile Setup</strong> – Adaptable for corporate, academic, and social events</p><p>Book <strong>Summit Room</strong> today and host a <strong>successful, seamless, and engaging event</strong> at <strong>Meeting Spot</strong>!</p>",
   //     },
   //   },
   // );
